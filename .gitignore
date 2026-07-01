@@ -1,0 +1,57 @@
+# Dependências
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+*.tsbuildinfo
+
+# Variáveis de ambiente — NUNCA versionar
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Cache
+.eslintcache
+.turbo/
+
+# Supabase
+.supabase/
+
+# Uploads de ficheiros (gerados em runtime)
+backend/uploads/
+
+# tsconfig build info
+backend/tsconfig.tsbuildinfo
+
+# Python (OCR)
+backend/__pycache__/
+backend/*.pyc
+
+# Ficheiros de notas de desenvolvimento no raiz
+# (scripts temporários, SQL de debug, documentação interna)
+/*.sql
+/*.bat
+/*.ps1
+/*.sh
+/*.txt
+/*.js
+/[A-Z]*.md
+!/README.md

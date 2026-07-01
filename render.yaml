@@ -1,0 +1,51 @@
+services:
+  # ─── Backend API (Web Service — Node.js) ───────────────────────────────────
+  - type: web
+    name: sad-bankcredit-api
+    env: node
+    region: frankfurt
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRATION
+        value: 7d
+      - key: STORAGE_BUCKET
+        value: documents
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      - key: MIN_INCOME
+        value: 50000
+      - key: MAX_DEBT_RATIO
+        value: 40
+      - key: MIN_CREDIT_SCORE
+        value: 50
+      # ── Definir manualmente no dashboard Render ──
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false   # definir após o deploy do frontend (ex: https://sad-bankcredit-web.onrender.com)
+      - key: OPENAI_API_KEY
+        sync: false   # opcional — sistema funciona sem esta chave
+
+  # ─── Frontend (Static Site — React/Vite) ───────────────────────────────────
+  - type: static
+    name: sad-bankcredit-web
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      # ── Definir manualmente no dashboard Render ──
+      - key: VITE_API_URL
+        sync: false   # ex: https://sad-bankcredit-api.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
