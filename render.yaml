@@ -39,7 +39,6 @@ services:
   - type: web
     name: sad-bankcredit-web
     env: static
-    region: frankfurt
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
