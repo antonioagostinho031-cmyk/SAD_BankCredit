@@ -31,21 +31,23 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        sync: false   # definir após o deploy do frontend (ex: https://sad-bankcredit-web.onrender.com)
+        sync: false
       - key: OPENAI_API_KEY
-        sync: false   # opcional — sistema funciona sem esta chave
+        sync: false
 
   # ─── Frontend (Static Site — React/Vite) ───────────────────────────────────
-  - type: static
+  - type: web
     name: sad-bankcredit-web
+    env: static
+    region: frankfurt
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
-    envVars:
-      # ── Definir manualmente no dashboard Render ──
-      - key: VITE_API_URL
-        sync: false   # ex: https://sad-bankcredit-api.onrender.com/api/v1
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
+    envVars:
+      # ── Definir manualmente no dashboard Render antes do primeiro build ──
+      - key: VITE_API_URL
+        sync: false
